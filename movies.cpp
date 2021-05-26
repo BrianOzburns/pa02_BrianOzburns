@@ -481,28 +481,21 @@ bool MoviesBST::remove(string t){
     return false;
 }
 
-void MoviesBST::printTitleRatingDepth(string t) const{
-    // travers the tree to find title t then print title, rating, depth
-    Movie *m = this->root;
-    int depth = 0;
-    
-    if ( contains(t) ){
-        while ( m ){
-            if ( m->title > t ){
-                m = m->left;
-                depth += 1;
-            }
-            else if ( m->title < t ){
-                m = m->right;
-                depth += 1;
-            }
-            else { // movie found
-                cout << m->title << ", " << m->rating << ", " << depth << endl;
-                m = nullptr;
-            }
-        }
+void MoviesBST::preorderPrintTitleRatingDepth() const{
+    preorderPrintTitleRatingDepth(root, 0);
+}
+
+void MoviesBST::preorderPrintTitleRatingDepth(MoviesBST::Movie *m, int depth) const{
+    // traverse the tree to find title t then print title, rating, depth
+    if ( m ){
+        cout << m->title << ", " << m->rating << ", " << depth << endl;
     }
-    // movie not found, print nothing
+    if ( m->left ){
+        preorderPrintTitleRatingDepth(m->left, depth+1);
+    }
+    if ( m->right ){
+        preorderPrintTitleRatingDepth(m->right, depth+1);
+    }
 }
 
 void MoviesBST::printBestMovie(string prefix, int prefixLength){

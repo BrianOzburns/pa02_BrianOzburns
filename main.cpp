@@ -48,8 +48,9 @@ int main(int argc, char** argv){
     // Use std::string movieName and double movieRating
     // to construct your Movie objects
     m.insert(movieName, movieRating);
-    m.printTitleRatingDepth(movieName);
   }
+  m.preorderPrintTitleRatingDepth();
+
   movieFile.close();
 
   cout << endl;

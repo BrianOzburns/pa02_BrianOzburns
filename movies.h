@@ -28,7 +28,7 @@ class MoviesBST {
     string getSuccessor(string t) const;         // returns the successor value of the given value or "" if there is none
     bool remove(string t);                    // deletes the Movie containing the given value from the tree
 
-    void printTitleRatingDepth(string t) const;     // Prints "movie title, rating, depth"
+    void preorderPrintTitleRatingDepth() const;     // Prints "movie title, rating, depth" in preorder
     void printBestMovie(string prefix, int prefixLength);     // Prints best movie with title starting with prefix
 
  private:
@@ -52,7 +52,9 @@ class MoviesBST {
     void printPostOrder(Movie *n) const;
     double sumRatings(Movie *n) const;
     int countMovies(Movie *n) const;
+    
     stack<Movie*> findInstancesOfPrefix(stack<Movie*>& movies, Movie *m, string prefix, int prefixLength);   // finds instances of movie titles that start with prefix adds them to a stack then returns the stack
+    void preorderPrintTitleRatingDepth(Movie *m, int depth) const;     // Prints "movie title, rating, depth" in preorder
 
     // these should be used by getPredecessor and getSuccessor, and ONE of them should be used by remove
     Movie* getSuccessorMovie(string t) const;   // returns the Movie containing the successor of the given value
