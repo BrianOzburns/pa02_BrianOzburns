@@ -178,6 +178,29 @@ bool MoviesBST::contains(string t) const {
     return false; 
 }
 
+// returns the Movie containing the title t
+MoviesBST::Movie* MoviesBST::getMovie(string t) const{
+    Movie *n;
+    n = root;
+    if ( !n ){ // root doesn't exist, tree/subtree empty
+        return nullptr;
+    }
+    if ( contains(t) ){ // check to make sure title t is in fact contained within the BST
+        while ( n ){
+            if ( t < n->title ){ // search left subtree for title t
+                n = n->left;
+            }
+            else if ( t > n->title ){ // search right subtree for title t
+                n = n->right;
+            }
+            else{ // title t found
+                return n;
+            }
+        }
+    }
+    return nullptr;
+}
+
 // returns the Movie containing the predecessor of the given title t
 MoviesBST::Movie* MoviesBST::getPredecessorMovie(string t) const{
     Movie *n;
