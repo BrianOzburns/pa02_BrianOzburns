@@ -21,9 +21,11 @@ class MoviesBST {
     void printInOrder() const; // print tree data in-order to cout
     void printPostOrder() const; // print tree data post-order to cout
     double sumRatings() const; // sum of all values
-    int countMovies() const; // count of values
+    int countMovies() const; // returns numMovies
+    int countMVisited() const; // returns moviesVisited
     bool contains(string t) const; // true if value is in tree
 
+    string getMovieTitle(string t) const; // returns the title of the movie containing the title t
     string getPredecessor(string t) const; // returns the predecessor value of the given value or "" if there is none
     string getSuccessor(string t) const; // returns the successor value of the given value or "" if there is none
     bool remove(string t); // deletes the Movie containing the given value from the tree
@@ -42,6 +44,8 @@ class MoviesBST {
     };
 
     Movie *root;
+    int numMovies = 0; // increments by 1 each time a movie is inserted
+    int moviesVisited = 0; // changes every time insert function is called
 
     void clear(Movie *n); // for destructor
     bool insert(string t, double r, Movie *n); // note overloading names for simplicity
@@ -49,7 +53,6 @@ class MoviesBST {
     void printInOrder(Movie *n) const;
     void printPostOrder(Movie *n) const;
     double sumRatings(Movie *n) const; // returns sum of all movie ratings
-    int countMovies(Movie *n) const; // returns number of movies in movies tree
     
     stack<Movie*> findInstancesOfPrefix(stack<Movie*>& movies, Movie *m, string prefix, int prefixLength); // finds instances of movie titles that start with prefix adds them to a stack then returns the stack
     void preorderPrintTitleRatingDepth(Movie *m, int depth) const; // Prints "movie title, rating, depth" in preorder

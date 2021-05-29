@@ -27,31 +27,40 @@ bool MoviesBST::insert(string t, double r) {
     // handle special case of empty tree first
     if (!root) {
         root = new Movie(t, r);
+        numMovies += 1;
         return true;
     }
     // otherwise use recursive helper
+    this->moviesVisited = 1;
     return insert(t, r, root);
 }
 
 // recursive helper for insert (assumes n is never 0)
 bool MoviesBST::insert(string t, double r, Movie *n) {
-    if (t == n->title)
+    if (t == n->title){
 	    return false;
-    if (t < n->title) {
-        if (n->left)
+    }
+    if (t < n->title){
+        if (n->left){
+            moviesVisited += 1;
             return insert(t, r, n->left);
+        }
         else {
             n->left = new Movie(t, r);
             n->left->parent = n;
+            numMovies += 1;
             return true;
         }
     }
     else {
-        if (n->right)
+        if (n->right){
+            moviesVisited += 1;
             return insert(t, r, n->right);
+        }
         else {
             n->right = new Movie(t, r);
             n->right->parent = n;
+            numMovies += 1;
             return true;
         }
     }
@@ -134,26 +143,7 @@ double MoviesBST::sumRatings(Movie *n) const {
 
 // return number of movies in tree
 int MoviesBST::countMovies() const {
-    return countMovies(root);
-}
-
-// recursive helper for count
-int MoviesBST::countMovies(Movie *n) const {
-    int numMovies = 0;
-    if ( !n ){ // root doesn't exist, tree/subtree empty
-        return 0;
-    }
-    else { // tree not empty, return sum of numMovies in left and right subtrees +1 with current Movie included
-        if ( n->left ){
-            numMovies += countMovies(n->left);
-        }
-        if ( n->right ){
-            numMovies += countMovies(n->right);
-        }
-        return numMovies + 1;
-    }
-
-    return 0;
+    return numMovies;
 }
 
 // returns true if title t is in the tree; false if not
@@ -176,6 +166,28 @@ bool MoviesBST::contains(string t) const {
     }
 
     return false; 
+}
+
+string MoviesBST::getMovieTitle(string t) const{ // returns the title of the movie containing the title t
+    Movie *n;
+    n = root;
+    if ( !n ){ // root doesn't exist, tree/subtree empty
+        return "";
+    }
+    if ( contains(t) ){ // check to make sure title t is in fact contained within the BST
+        while ( n ){
+            if ( t < n->title ){ // search left subtree for title t
+                n = n->left;
+            }
+            else if ( t > n->title ){ // search right subtree for title t
+                n = n->right;
+            }
+            else{ // title t found
+                return n->title;
+            }
+        }
+    }
+    return "";
 }
 
 // returns the Movie containing the title t
@@ -502,6 +514,10 @@ bool MoviesBST::remove(string t){
     }
     // else title t is not in tree, return false
     return false;
+}
+
+int MoviesBST::countMVisited() const{
+    return moviesVisited;
 }
 
 void MoviesBST::preorderPrintTitleRatingDepth() const{
